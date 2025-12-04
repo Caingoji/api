@@ -5,6 +5,7 @@ from rest_framework import status
 from rest_framework.decorators import APIView
 from rest_framework.response import Response
 from django.http import Http404
+from rest_framework import viewsets
 
 
 #============================================================================================================================
@@ -49,6 +50,10 @@ class ClienteDetail(APIView):
         cliente = self.get_object(pk)
         cliente.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
+    
+
+
+
     
 #============================================================================================================================
 # ========================================empleados===========================================================================
