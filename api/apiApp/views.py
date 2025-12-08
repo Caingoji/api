@@ -1,4 +1,6 @@
 from django.shortcuts import render
+from rest_framework.decorators import api_view
+from django.contrib.auth.hashers import check_password
 from .serializers import ClienteSerializer, EmpleadoSerializer, PedidoSerializer
 from .models import Cliente, Empleado, Pedido
 from rest_framework import status
@@ -6,6 +8,7 @@ from rest_framework.decorators import APIView
 from rest_framework.response import Response
 from django.http import Http404
 from rest_framework import viewsets
+
 
 
 #============================================================================================================================
@@ -51,6 +54,29 @@ class ClienteDetail(APIView):
         cliente.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
     
+# ============================================================================================================================
+# ==============================================LOGIN CLIENTE=================================================================
+#=============================================================================================================================
+
+@api_view(['POST'])
+def login_cliente(request):
+    correo = request.data.get('correo')
+    contrasena = request.data.get('contrasena')
+
+    try:
+        cliente = Cliente.objects.get(correo=correo)
+
+        if cliente.contrasena == contrasena:
+            return Response({
+                "mensaje": "Login exitoso",
+                "cliente_id": cliente.id,
+                "nombre": cliente.nombre
+            }, status=200)
+        else:
+            return Response({"error": "Contraseña incorrecta"}, status=400)
+
+    except Cliente.DoesNotExist:
+        return Response({"error": "Correo no encontrado"}, status=404)
 
 
 
@@ -98,6 +124,33 @@ class EmpleadoDetail(APIView):
         empleado = self.get_object(pk)
         empleado.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
+    
+
+#============================================================================================================================
+#=======================================login empleado=====================================================================
+#============================================================================================================================
+@api_view(['POST'])
+def login_empleado(request):
+    correo = request.data.get('correo')
+    contrasena = request.data.get('contrasena')
+
+    try:
+        empleado = Empleado.objects.get(correo=correo)
+    except Empleado.DoesNotExist:
+        return Response({"error": "Correo no encontrado"}, status=404)
+
+    if empleado.contrasena != contrasena:
+        return Response({"error": "Contraseña incorrecta"}, status=400)
+
+    return Response({
+        "id": empleado.id,
+        "nombre": empleado.nombre,
+        "correo": empleado.correo,
+        "cargo": empleado.cargo
+    }, status=200)
+
+
+
     
 #============================================================================================================================
 # ========================================pedidos=============================================================================

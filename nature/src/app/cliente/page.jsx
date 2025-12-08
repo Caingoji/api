@@ -1,5 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
+import Link from "next/link";
 
 export default function ClienteHome() {
   const [cliente, setCliente] = useState(null);
@@ -26,17 +27,9 @@ export default function ClienteHome() {
 
       <br />
 
-      <a
-        href="/cliente/pedidos"
-        style={{
-          padding: "10px 20px",
-          background: "#0070f3",
-          color: "white",
-          borderRadius: "8px",
-        }}
-      >
-        Ver mis pedidos
-      </a>
+      <Link href="/cliente/pedido">
+        <button>Hacer Pedido</button>
+      </Link>
     </div>
   );
 }

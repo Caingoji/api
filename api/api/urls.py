@@ -25,4 +25,6 @@ urlpatterns = [
     path('empleados/<int:pk>/', views.EmpleadoDetail.as_view(), name='empleado-detail'),
     path('pedidos/', views.PedidoList.as_view(), name='pedido-list'),
     path('pedidos/<int:pk>/', views.PedidoDetail.as_view(), name='pedido-detail'),
+    path('login/', views.login_cliente, name='login-cliente'),
+    path('login_empleado/', views.login_empleado, name="login-empleado")
 ]

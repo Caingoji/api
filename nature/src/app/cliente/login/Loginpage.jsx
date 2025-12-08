@@ -18,29 +18,29 @@ export default function LoginCliente() {
     e.preventDefault();
 
     try {
-      const res = await fetch("http://127.0.0.1:8000/clientes/");
-      const clientes = await res.json();
+      const res = await fetch("http://127.0.0.1:8000/login/", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(form),
+      });
 
-      const encontrado = clientes.find(
-        (c) =>
-          c.correo === form.correo &&
-          c.contrasena === form.contrasena
-      );
+      const data = await res.json();
 
-      if (!encontrado) {
-        setMensaje("❌ Credenciales incorrectas");
+      if (!res.ok) {
+        setMensaje("❌ " + data.error);
         return;
       }
-
-
-      localStorage.setItem("cliente", JSON.stringify(encontrado));
+      
+      localStorage.setItem("cliente", JSON.stringify(data));
       window.location.href = "/cliente";
 
-      setMensaje("✔ Sesión iniciada");
     } catch (error) {
       setMensaje("⚠ Error al conectar con la API");
     }
   };
+
 
   return (
     <div>
