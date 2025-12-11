@@ -28,7 +28,7 @@ export default function Home() {
         <h2>¿Qué deseas hacer?</h2>
 
         {/* Registro Cliente */}
-        <Link href="/registro">
+        <Link href="/cliente/registro">
           <button style={{ ...btn, background: "#28a745", color: "white" }}>
             Registrarme (Cliente)
           </button>

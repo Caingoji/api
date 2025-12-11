@@ -30,10 +30,8 @@ export default function LoginGeneral() {
       );
 
       if (cliente) {
-        localStorage.setItem("usuario", JSON.stringify({
-          tipo: "cliente",
-          ...cliente
-        }));
+        // GUARDAR COMO "cliente" — CORRECCIÓN
+        localStorage.setItem("cliente", JSON.stringify(cliente));
 
         window.location.href = "/cliente";
         return;
@@ -50,10 +48,8 @@ export default function LoginGeneral() {
       );
 
       if (empleado) {
-        localStorage.setItem("usuario", JSON.stringify({
-          tipo: "empleado",
-          ...empleado
-        }));
+        // GUARDAR COMO "empleado" — CORRECCIÓN
+        localStorage.setItem("empleado", JSON.stringify(empleado));
 
         window.location.href = "/empleado";
         return;

@@ -66,17 +66,21 @@ def login_cliente(request):
     try:
         cliente = Cliente.objects.get(correo=correo)
 
-        if cliente.contrasena == contrasena:
-            return Response({
-                "mensaje": "Login exitoso",
-                "cliente_id": cliente.id,
-                "nombre": cliente.nombre
-            }, status=200)
-        else:
+        if cliente.contrasena != contrasena:
             return Response({"error": "Contraseña incorrecta"}, status=400)
+
+        # DEVOLVER TODOS LOS DATOS DEL CLIENTE
+        return Response({
+            "id": cliente.id,
+            "nombre": cliente.nombre,
+            "correo": cliente.correo,
+            "direccion": cliente.direccion,
+            "telefono": cliente.telefono
+        }, status=200)
 
     except Cliente.DoesNotExist:
         return Response({"error": "Correo no encontrado"}, status=404)
+
 
 
 
@@ -163,11 +167,30 @@ class PedidoList(APIView):
         return Response(serializer.data)
 
     def post(self, request):
-        serializer = PedidoSerializer(data=request.data)
+        data = request.data.copy()
+
+        # Obtener cliente si viene en la solicitud
+        cliente_id = data.get("cliente")
+
+        if cliente_id:
+            try:
+                cliente = Cliente.objects.get(id=cliente_id)
+
+                # Copiar los datos del cliente al pedido
+                data["nombre"] = cliente.nombre
+                data["telefono"] = cliente.telefono
+                data["direccion"] = cliente.direccion
+
+            except Cliente.DoesNotExist:
+                return Response({"error": "Cliente no encontrado"}, status=status.HTTP_404_NOT_FOUND)
+
+        serializer = PedidoSerializer(data=data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
+
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
     
 
 class PedidoDetail(APIView):
@@ -194,3 +217,12 @@ class PedidoDetail(APIView):
         pedido = self.get_object(pk)
         pedido.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
+
+@api_view(['GET'])
+def pedidos_cliente(request, cliente_id):
+    try:
+        pedidos = Pedido.objects.filter(cliente=cliente_id)
+        serializer = PedidoSerializer(pedidos, many=True)
+        return Response(serializer.data, status=200)
+    except:
+        return Response({"error": "Error al obtener pedidos"}, status=400)

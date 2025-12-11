@@ -1,78 +1,66 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Link from "next/link";
 
-export default function ListaPedidosEmpleado() {
+export default function EmpleadoPedidos() {
+  const [empleado, setEmpleado] = useState(null);
   const [pedidos, setPedidos] = useState([]);
 
-  const cargarPedidos = async () => {
-    const res = await fetch("http://127.0.0.1:8000/pedidos/");
-    const data = await res.json();
-    setPedidos(data);
-  };
-
   useEffect(() => {
-    cargarPedidos();
+    const data = localStorage.getItem("empleado");
+
+    if (!data) {
+      window.location.href = "/empleado/login";
+      return;
+    }
+
+    setEmpleado(JSON.parse(data));
+
+    // Obtener pedidos al cargar
+    fetch("http://127.0.0.1:8000/pedidos/")
+      .then((res) => res.json())
+      .then((data) => setPedidos(data));
   }, []);
 
-  const eliminarPedido = async (id) => {
-    if (!confirm("¿Eliminar pedido?")) return;
-
-    await fetch(`http://127.0.0.1:8000/pedidos/${id}/`, {
-      method: "DELETE",
-    });
-
-    cargarPedidos();
-  };
+  if (!empleado) return <h2>Cargando...</h2>;
 
   return (
     <div style={{ padding: "20px" }}>
-      <h1>Pedidos Registrados</h1>
+      <h1>Pedidos del sistema</h1>
 
-      <table border="1" cellPadding="8" style={{ marginTop: "20px", width: "100%" }}>
-        <thead>
-          <tr>
-            <th>ID</th>
-            <th>Cliente / Nombre</th>
-            <th>Teléfono</th>
-            <th>Dirección</th>
-            <th>Cantidad</th>
-            <th>Estado</th>
-            <th>Acciones</th>
-          </tr>
-        </thead>
+      {/* ⭐ NUEVO BOTÓN ARRIBA DEL TODO */}
+      <Link href="/empleado/pedidos/crear">
+        <button style={{ marginBottom: "20px" }}>Crear Pedido</button>
+      </Link>
 
-        <tbody>
-          {pedidos.map((p) => (
-            <tr key={p.id}>
-              <td>{p.id}</td>
+      <ul>
+        {pedidos.map((pedido) => (
+          <li key={pedido.id}>
+            <strong>ID:</strong> {pedido.id} - {pedido.calle}  
+            <br />
 
-              <td>{p.cliente ? p.cliente.nombre : p.nombre}</td>
+            {/* Botón Editar */}
+            <Link href={`/empleado/pedidos/editar/${pedido.id}`}>
+              <button>Editar</button>
+            </Link>
 
-              <td>{p.cliente ? p.cliente.telefono : p.telefono}</td>
+            {/* Botón Eliminar */}
+            <button
+              onClick={async () => {
+                await fetch(`http://127.0.0.1:8000/pedidos/${pedido.id}/`, {
+                  method: "DELETE",
+                });
+                window.location.reload();
+              }}
+            >
+              Eliminar
+            </button>
 
-              <td>{p.calle || p.direccion}</td>
-
-              <td>{p.cantidad_bidones}</td>
-
-              <td>{p.estado}</td>
-
-              <td>
-                <button
-                  onClick={() => (window.location.href = `/empleado/pedidos/${p.id}`)}
-                  style={{ marginRight: "10px" }}
-                >
-                  ✏ Editar
-                </button>
-
-                <button onClick={() => eliminarPedido(p.id)} style={{ color: "red" }}>
-                  🗑 Eliminar
-                </button>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+            <hr />
+          </li>
+        ))}
+      </ul>
     </div>
   );
 }

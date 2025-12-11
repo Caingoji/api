@@ -26,5 +26,7 @@ urlpatterns = [
     path('pedidos/', views.PedidoList.as_view(), name='pedido-list'),
     path('pedidos/<int:pk>/', views.PedidoDetail.as_view(), name='pedido-detail'),
     path('login/', views.login_cliente, name='login-cliente'),
-    path('login_empleado/', views.login_empleado, name="login-empleado")
+    path('login_empleado/', views.login_empleado, name="login-empleado"),
+    path('pedidos_cliente/<int:cliente_id>/', views.pedidos_cliente)
+
 ]
