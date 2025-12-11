@@ -1,53 +1,42 @@
 "use client";
-
 import Link from "next/link";
 
 export default function Home() {
-  const btn = {
-    padding: "12px 20px",
-    margin: "10px 0",
-    borderRadius: "8px",
-    fontSize: "16px",
-    cursor: "pointer",
-    width: "200px",
-  };
-
   return (
-    <div style={{ textAlign: "center", marginTop: "80px" }}>
-      <h1>Bienvenido a Nature Andes</h1>
+    <div className="main-center">
+
+      <img src="/logo.png" className="logo" alt="Logo" />
 
       <div
         style={{
-          background: "#222",
-          padding: "30px",
-          borderRadius: "15px",
-          display: "inline-block",
-          marginTop: "20px",
+          position: "absolute",
+          top: "20px",
+          right: "20px",
+          display: "flex",
+          flexDirection: "column",
+          gap: "10px"
         }}
       >
-        <h2>¿Qué deseas hacer?</h2>
-
-        {/* Registro Cliente */}
-        <Link href="/cliente/registro">
-          <button style={{ ...btn, background: "#28a745", color: "white" }}>
-            Registrarme (Cliente)
-          </button>
+        <Link href="/cliente/registro" className="btn-secundario">
+          Registrarse como Cliente
         </Link>
 
-        {/* Registro Empleado */}
-        <Link href="/empleado/registro">
-          <button style={{ ...btn, background: "#ff9800", color: "white" }}>
-            Registrarme (Empleado)
-          </button>
+        <Link href="/empleado/registro" className="btn-empleado">
+          Registrarse como Empleado
         </Link>
 
-        {/* Login general */}
-        <Link href="/loginGeneral">
-          <button style={{ ...btn, background: "#007bff", color: "white" }}>
-            Iniciar Sesión
-          </button>
+        <Link href="/loginGeneral" className="btn">
+          Iniciar Sesión
         </Link>
       </div>
+
+      <h1>Bienvenido a Agua Purificada</h1>
+      <p>Solicita tu pedido de forma rápida y sencilla</p>
+
+      <Link href="/publico" className="btn" style={{ marginTop: "20px" }}>
+        Hacer Pedido sin Cuenta
+      </Link>
+
     </div>
   );
 }

@@ -1,26 +1,358 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
-
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+    font-family: 'Segoe UI', Arial, sans-serif;
+    background-color: #f5f9ff;
+    margin: 0;
+    padding: 0;
+    color: #0d1b2a;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+}
+
+
+.main-center {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    text-align: center;
+    padding: 20px;
+}
+
+
+img.logo {
+    width: 200px;
+    height: auto;
+    margin: 30px 0 20px 0;
+    display: block;
+    border-radius: 16px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+
+h1, h2, h3 {
+    color: #0d47a1;
+    margin-bottom: 10px;
+}
+
+p {
+    color: #333;
+    margin-bottom: 15px;
+}
+
+
+.btn, button {
+    display: inline-block;
+    background: #1565c0;
+    color: white;
+    padding: 10px 24px;
+    border: none;
+    border-radius: 8px;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background 0.3s ease, transform 0.1s ease;
+    font-size: 16px;
+    font-weight: 500;
+}
+
+.btn:hover, button:hover {
+    background: #0d47a1;
+    transform: scale(1.03);
+}
+
+.btn:active, button:active {
+    transform: scale(0.98);
+}
+
+
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin: 30px 0;
+    background: #ffffff;
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+    width: 100%;
+    max-width: 400px;
+}
+
+label {
+    font-weight: bold;
+    color: #0d47a1;
+    text-align: left;
+}
+
+input, select {
+    padding: 10px;
+    border: 1px solid #90caf9;
+    border-radius: 8px;
+    outline: none;
+    transition: border 0.3s, box-shadow 0.3s;
+    font-size: 15px;
+}
+
+input:focus, select:focus {
+    border-color: #1565c0;
+    box-shadow: 0 0 6px rgba(21,101,192,0.3);
+}
+
+
+.mensaje {
+    background-color: #e3f2fd;
+    border: 1px solid #1565c0;
+    color: #0d47a1;
+    border-radius: 8px;
+    padding: 10px;
+    text-align: center;
+    font-weight: bold;
+    margin-bottom: 15px;
+}
+
+.mensaje.error {
+    background-color: #ffebee;
+    border: 1px solid #d32f2f;
+    color: #b71c1c;
+}
+
+
+table {
+    width: 95%;
+    max-width: 900px;
+    margin: 30px auto;
+    border-collapse: collapse;
+    background: white;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+th, td {
+    padding: 12px;
+    text-align: center;
+}
+
+th {
+    background: #1565c0;
+    color: white;
+}
+
+tr:nth-child(even) {
+    background: #e3f2fd;
+}
+
+tr:hover {
+    background: #bbdefb;
+}
+
+.btn-volver {
+    display: block;
+    width: 200px;
+    margin: 30px auto;
+    padding: 10px;
+    background: #1976d2;
+    color: white;
+    text-decoration: none;
+    border-radius: 8px;
+    transition: 0.3s;
+    text-align: center;
+}
+
+.btn-volver:hover {
+    background: #0d47a1;
+}
+
+footer {
+    margin-top: auto;
+    padding: 10px 0;
+    color: #555;
+    font-size: 14px;
+    text-align: center;
+}
+
+
+.registro-links {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    margin-top: 15px;
+}
+
+.btn-secundario {
+    background: #42a5f5;
+    padding: 10px 20px;
+    width: 240px;
+    text-align: center;
+}
+
+.btn-secundario:hover {
+    background: #1e88e5;
+}
+
+
+
+.menu-container {
+    text-align: center;
+    margin-top: 40px;
+}
+
+
+.menu-botones {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+    margin-top: 25px;
+}
+
+.btn {
+    display: inline-block;
+    background: #42a5f5;
+    color: white;
+    text-decoration: none;
+    padding: 12px 30px;
+    border-radius: 8px;
+    font-weight: bold;
+    transition: background 0.3s;
+    width: 250px;
+    text-align: center;
+}
+
+.btn:hover {
+    background: #1e88e5;
+}
+
+
+.btn-secundario {
+    background: #42a5f5;
+}
+
+.btn-secundario:hover {
+    background: #1e88e5;
+}
+
+
+.btn-peligro {
+    background: #ef5350;
+}
+
+.btn-peligro:hover {
+    background: #d32f2f;
+}
+
+
+.header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.logo {
+    width: 100px;
+    height: auto;
+    margin-bottom: 10px;
+}
+
+
+.btn-empleado {
+    background: #43a047;
+}
+
+.btn-empleado:hover {
+    background: #2e7d32;
+}
+
+
+.info {
+    background: #ffffff;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    margin: 20px auto;
+    width: 90%;
+    max-width: 400px;
+    text-align: left;
+}
+
+
+.estados {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+    margin-top: 25px;
+}
+
+
+.card {
+    width: 260px;
+    padding: 12px 0;
+    border-radius: 10px;
+    color: white;
+    font-weight: bold;
+    text-align: center;
+    font-size: 16px;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    opacity: 0.7;
+}
+
+.card:hover {
+    transform: scale(1.03);
+}
+
+.card.espera { background-color: #e53935; }      
+.card.camino { background-color: #fbc02d; color: #333; } 
+.card.entregado { background-color: #43a047; } 
+
+
+.card.activo {
+    box-shadow: 0 0 15px rgba(0,0,0,0.3);
+    opacity: 1;
+    transform: scale(1.05);
+    border: 2px solid #0d47a1;
+}
+
+.acciones {
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+}
+
+.btn-accion {
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-size: 14px;
+    text-decoration: none !important;
+    color: #fff !important;
+    font-weight: bold;
+    display: inline-block;
+    transition: 0.2s ease-in-out;
+}
+
+.btn-editar-pedido {
+    background-color: #007bff;
+}
+.btn-editar-pedido:hover {
+    background-color: #0056b3;
+}
+
+.btn-editar-datos {
+    background-color: #6f42c1;
+}
+.btn-editar-datos:hover {
+    background-color: #4b2d8f;
+}
+
+.btn-eliminar {
+    background-color: #dc3545;
+}
+.btn-eliminar:hover {
+    background-color: #a71d2a;
 }
